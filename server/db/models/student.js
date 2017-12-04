@@ -1,6 +1,6 @@
 'use strcit';
 const Sequelize = require('sequelize');
-const db = require('../db');
+const db = require('../../db');
 
 const Student = db.define('student', {
 
@@ -36,11 +36,3 @@ const Student = db.define('student', {
 })
 
 module.exports = Student;
-
-// have profile info including:
-// firstName - not empty or null
-// lastName - not empty or null
-// email - not empty or null; valid email
-// gpa - decimal between 0.0 and 4.0
-// must have a virtual 'name' field which is the concatenation of firstName and lastName
-// must be assigned to a campus
