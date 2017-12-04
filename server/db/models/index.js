@@ -6,3 +6,15 @@
 	// Exporting all models from here seems like a good idea!
 
 // This is also probably a good place for you to set up your associations
+const db = require.require('../db')
+const Student = require('./student')
+const Campus = require('./campus')
+
+Student.belongsTo(Campus) // student now has campusId on model
+Campus.hasMany(Student) ///campus has getStudent, setStudent functions
+
+module.exports = {
+	db,
+	Student,
+	Campus
+}
