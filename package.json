@@ -2,9 +2,9 @@
   "name": "mhiaofjs",
   "version": "0.0.1",
   "description": "A review time project",
-  "main": "index.js",
+  "main": "main.js",
   "scripts": {
-    "start:dev": "webpack -w & nodemon main",
+    "start:dev": "webpack -w & nodemon main.js",
     "start": "node main"
   },
   "keywords": [
@@ -13,6 +13,8 @@
     "skeleton"
   ],
   "dependencies": {
+    "axios": "^0.17.1",
+    "babel-preset-env": "^1.6.1",
     "body-parser": "^1.15.2",
     "chalk": "^1.1.3",
     "express": "^4.14.0",
