@@ -13,7 +13,9 @@ const initialState = {
     campus: {},
 
     newCampusEntry: {},
-    newStudentEntry: {}
+    newStudentEntry: {},
+
+    editStudent: {}
 }
 
 export default createStore(reducer, applyMiddleware(thunkMiddleware, loggingMiddleware))
@@ -172,6 +174,29 @@ export function postStudent(studentData) {
     }
 }
 
+export function putStudent(id, studentData){
+    return function thunk(dispatch) {
+        axios.put(`/api/students/${id}`, studentData)
+            .then(res=>res.data)
+            .then(student=> {
+                const action = updateStudent(student)
+                dispatch(action)
+            })
+    }
+}
+
+export function putCampus(id, campusData){
+    return function thunk(dispatch) {
+        axios.put(`/api/campuses/${id}`, campusData)
+            .then(res=>res.data)
+            .then(campus=> {
+                const action = updateCampus(campus)
+                dispatch(action)
+            })
+    }
+}
+
+
 export function removeStudent(student) {
     return function thunk(dispatch) {
         axios.delete(`/api/students/${student.id}`)
@@ -208,23 +233,25 @@ function reducer (state = initialState, action ){
         case WRITE_NEW_CAMPUS:
             return Object.assign({}, state, {newCampusEntry: action.campus})
         case GET_CAMPUS:
-            return Object.assign({}, state, {campuses: [...state.campuses, action.campus]})
+            return Object.assign({}, state, {campus: action.campus})
         case GET_STUDENT:
             return Object.assign({}, state, {student: action.student})
          case UPDATE_STUDENT:
              return Object.assign({}, state, {students: state.students.map(student=>{
-                 if(student !== action.student) return student;
-                 return Object.assign({}, student, {student: action.student})
-             })})
+                 if(+student.id === +action.student.id) return action.student;
+                 return student
+                }), student: action.student
+             })
          case UPDATE_CAMPUS:
-             return Object.assign({}, state, {students: state.campuses.map(campus=>{
-                if(campus !== action.campus) return campus;
-                return Object.assign({}, campus, {student: action.campus})
-            })})
+             return Object.assign({}, state, {campuses: state.campuses.map(campus=>{
+                if(+campus.id === +action.campus.id) return action.campus;
+                return campus 
+                }), campus: action.campus
+            })
         case DELETE_STUDENT:
             return Object.assign({}, state, {students: state.students.filter(student => student !== action.student)})
          case DELETE_CAMPUS:
-             return Object.assign({}, state, {campuses: state.campuses.filter(campuses => campus !== action.campus)})
+             return Object.assign({}, state, {campuses: state.campuses.filter(campus => campus !== action.campus)})
         default:
             return state;
     }

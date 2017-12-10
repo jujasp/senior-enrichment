@@ -1,9 +1,10 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
+import store, {removeCampus} from '../store'
 
 const Campuses = (props) => {
-    const {campuses, students, onDelete}  = props
+    const {campuses}  = props
 
     return (
         <div className="container">
@@ -25,7 +26,12 @@ const Campuses = (props) => {
                                    <td> <img className="img-thumbnail" src={campus.imageUrl} /></td>
                                     <td> <Link to={`/campuses/${campus.id}`}>{campus.name}</Link></td>
                                     <td> {campus.description}</td>
-                                    <td><button className="btn-danger" onClick={onDelete}>X</button></td>
+                                    <td><button
+                                    onClick={(evt) =>{
+                                        evt.preventDefault();
+                                        store.dispatch(removeCampus(campus))
+                                    }}
+                                    className="btn-danger">X</button></td>
                                 
                             </tr>
                         )
@@ -42,14 +48,6 @@ const mapStateToProps = function(state) {
     return {
         campuses: state.campuses,
         students: state.students
-    }
-}
-
-const mapDispatchToProps = function(dispatch) {
-    return {
-        onDelete() {
-
-        }
     }
 }
 

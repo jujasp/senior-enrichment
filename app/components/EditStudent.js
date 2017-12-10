@@ -1,44 +1,87 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React, {Component} from 'react';
+import store, {putStudent} from '../store'
 
-const EditStudent = (props) => {
-    const student = props.student
+export default class EditStudent extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {}
 
-        return (
-            <div>
-                <form onSubmit = {this.handleSubmit}>
-                    <legend> Student </legend>
-                        <label> First Name </label>
-                        <input type='text' onChange={this.handleOnChange} value={student.firstName} />
-                        <br />
-                        <label> Last Name </label>
-                        <input type='text' onChange={this.handleOnChange} value={student.lastName} />
-                        <br />
-                        <label> E-mail</label>
-                        <input type='text' onChange={this.handleOnChange} value={student.email} />
-                        <br />
-                        <label> GPA </label>
-                        <input type='text' placeholder='value between 0.0 - 4.0' onChange={this.handleOnChange} value={student.gpa} />
-                        <br />
-                        <label> Campus </label>
-                        <select name="campuses">
-                            <option value="value1">Value 1</option> 
-                            <option value="value2">Value 2</option>
-                            <option value="value3">Value 3</option>
-                        </select>
-                        <br />
-                        <button type="submit"> Edit Student </button>
-                </form>
-            </div>
+        this.handleChange = this.handleChange.bind(this)
+        this.handleSubmit = this.handleSubmit.bind(this)
+    }
+
+    handleChange(evt) {
+        evt.preventDefault();
+        this.setState({[evt.target.name]: evt.target.value})
+    }
+
+    handleSubmit(evt, studentId) {
+        evt.preventDefault()
+        store.dispatch(putStudent(studentId, this.state))
+    }
+
+    componentDidMount() {
+        this.unsubscribe = store.subscribe(() => {
+			this.setState(store.getState());
+		});
+    }
+
+
+    componentWillUnmount () {
+		this.unsubscribe();
+	}
+
+
+        render() {
+            const {student, campuses} = this.props
+            const id = this.props.student.id
+                return (
+                    <div className="container">
+                        <form onSubmit={(e) => this.handleSubmit(e, id)}>
+                            <h5> Edit Student </h5>
+                                <label> First Name </label><br />
+                                <input
+                                name='firstName'
+                                onChange={this.handleChange}
+                                type='text'
+                                value={this.state.firstName} />
+                                <br />
+                                <label> Last Name </label><br />
+                                <input
+                                name="lastName"
+                                onChange={this.handleChange}
+                                type='text'
+                                value={this.state.lastName} />
+                                <br />
+                                <label> E-mail</label><br />
+                                <input 
+                                name="email"
+                                onChange={this.handleChange}
+                                type='text'
+                                value={this.state.email} />
+                                <br />
+                                <label> GPA </label><br />
+                                <input 
+                                name="gpa"
+                                onChange={this.handleChange}
+                                type='text' 
+                                value={this.state.gpa} />
+                                <br />
+                                <label> Campus </label><br />
+                                <select 
+                                name="campusId"
+                                onChange={this.handleChange}
+                                name="campuses">{campuses.map(campus => {
+                                    return <option
+                                    key={campus.id} 
+                                    value={this.state.campusId}>{campus.name}</option>
+                                })}
+                                </select>
+                                <br /><br />
+                                <button
+                                type="submit"> Edit Student </button>
+                        </form>
+                    </div>
         )
+    }
 }
-
-const mapStateToProps = function(state){
-    
-}
-
-const mapDispatchToProps = function(dispatch){
-
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(EditStudent)

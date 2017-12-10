@@ -4,7 +4,7 @@ import store, {removeStudent} from '../store'
 import { connect } from 'react-redux'
 
 const Students = (props) => {
-    const {students, campuses, handleDelete } = props
+    const {students, campuses} = props
 
         return (
             <div className="container">
@@ -27,7 +27,11 @@ const Students = (props) => {
                                     <td><Link to={`/students/${student.id}`}>{student.name} </Link> </td>
                                     <td> {student.email} </td>
                                     <td> {student.gpa} </td>
-                                    <td> {campuses.filter(campus => campus.id === student.campusId)[0].name}</td>
+                                    <td> {
+                                        !student.campusId ?
+                                        "Undefined" :
+                                        campuses.filter(campus => campus.id === student.campusId)[0].name
+                                    }</td>
                                     <td> <button
                                     onClick={(evt) => {
                                         evt.preventDefault();

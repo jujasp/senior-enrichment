@@ -39,7 +39,7 @@ router.put('/:studentId', (req, res, next) => {
         where: {id: req.params.studentId}
     })
     .then(student => student.update(req.body))
-    .then(student => res.json({message: "Update Successful", student: student}))
+    .then(student => res.json(student))
     .catch(next)
 })
 

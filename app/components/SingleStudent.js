@@ -1,20 +1,11 @@
 import React, { Component } from 'react';
-import {connect} from 'react-redux'
-import store, {fetchStudent, removeStudent, fetchCampuses} from '../store'
+import store, {fetchStudent} from '../store'
+import EditStudent from './EditStudent'
 
 export default class SingleStudent extends Component {
     constructor() {
         super();
         this.state = store.getState();
-
-        this.handleDelete = this.handleDelete.bind(this)
-    }
-
-    handleDelete(evt) {
-        evt.preventDefault()
-        const {student} = this.state
-        
-        store.dispatch(removeStudent(student))
     }
 
     componentDidMount() {
@@ -44,7 +35,6 @@ export default class SingleStudent extends Component {
                         <th>Email</th>
                         <th>GPA</th>
                         <th>Campus</th>
-                        <th>Delete</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -53,12 +43,14 @@ export default class SingleStudent extends Component {
                      <td>{student.lastName}</td>
                      <td>{student.email}</td>
                      <td>{student.gpa}</td>
-                     <td>{campuses.filter(campus => campus.id === student.campusId)
+                     <td>{ !student.campusId?
+                        "Undefined" :
+                         campuses.filter(campus => campus.id === student.campusId)
                         .map(campus => campus.name)[0]}</td>
-                     <button onClick={this.handleDelete}>x</button>
                     </tr>
                 </tbody>
                 </table>
+                    <EditStudent student={student} campuses={campuses}/>
              </div>
          )
      }
