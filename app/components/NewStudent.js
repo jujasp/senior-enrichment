@@ -1,8 +1,7 @@
-import React from 'react';
-import {postStudent, writeNewStudent} from '../store'
-import {connect} from 'react-redux'
+import React, {Component} from 'react';
+import {postStudent} from '../store'
 
-function NewStudent (props) {
+export default class NewStudent extends Component {
 
     const { newStudentEntry, handleSubmit, handleChange } = props;
 
@@ -54,30 +53,4 @@ function NewStudent (props) {
             </div>
         )
     }
-
-
-const mapStateToProps = function(state) {
-    return {
-        newStudentEntry: state.newStudentEntry
-    }
-}
-
-const mapDispatchToProps = function(dispatch, ownProps) {
-    const student = {};
-    return {
-        handleChange(evt) {
-            //key value on to the student object; 
-            student[evt.target.name]=evt.target.value;
-
-            dispatch(writeNewStudent(student))
-        },
-
-        handleSubmit (evt) {
-            evt.preventDefault();
-            dispatch(postStudent(student, ownProps.history))
-        }
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(NewStudent)
 

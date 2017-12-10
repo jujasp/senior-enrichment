@@ -8,6 +8,7 @@ export default class EditStudent extends Component {
 
         this.handleChange = this.handleChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
+        this.handleSelectChange = this.handleSelectChange.bind(this)
     }
 
     handleChange(evt) {
@@ -18,6 +19,16 @@ export default class EditStudent extends Component {
     handleSubmit(evt, studentId) {
         evt.preventDefault()
         store.dispatch(putStudent(studentId, this.state))
+    }
+
+    handleSelectChange(evt){
+        evt.preventDefault();
+        const index = evt.target.selectedIndex;
+        const optionElement = evt.target.childNodes[index]
+        const option =  optionElement.getAttribute('data-id');
+        this.setState({
+          campusId: +option
+        });
     }
 
     componentDidMount() {
@@ -68,13 +79,15 @@ export default class EditStudent extends Component {
                                 value={this.state.gpa} />
                                 <br />
                                 <label> Campus </label><br />
-                                <select 
+                                <select
                                 name="campusId"
-                                onChange={this.handleChange}
-                                name="campuses">{campuses.map(campus => {
+                                onChange={this.handleSelectChange}
+                                >{campuses.map(campus => {
                                     return <option
-                                    key={campus.id} 
-                                    value={this.state.campusId}>{campus.name}</option>
+                                    key={campus.id}
+                                    data-id={campus.id} 
+                                    value={this.state.campusId}
+                                    >{campus.name}</option>
                                 })}
                                 </select>
                                 <br /><br />

@@ -14,8 +14,6 @@ const initialState = {
 
     newCampusEntry: {},
     newStudentEntry: {},
-
-    editStudent: {}
 }
 
 export default createStore(reducer, applyMiddleware(thunkMiddleware, loggingMiddleware))
@@ -153,12 +151,13 @@ export function fetchStudent(id){
     }
 }
 
-export function postCampus(campusData, history) {
+export function postCampus(campusData) {
     return function thunk(dispatch) {
         axios.post('/api/campuses', campusData)
             .then(res=> res.data)
             .then(newCampus => {
                 dispatch(getCampus(newCampus))
+                browserHistory.push(`/campuses/${newCampus.id}`)
             })
     }
 }
@@ -233,7 +232,7 @@ function reducer (state = initialState, action ){
         case WRITE_NEW_CAMPUS:
             return Object.assign({}, state, {newCampusEntry: action.campus})
         case GET_CAMPUS:
-            return Object.assign({}, state, {campus: action.campus})
+            return Object.assign({}, state, {campuses:[...state.campuses, action.campus], campus: action.campus})
         case GET_STUDENT:
             return Object.assign({}, state, {student: action.student})
          case UPDATE_STUDENT:
