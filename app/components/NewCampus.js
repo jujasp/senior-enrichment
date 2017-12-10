@@ -6,10 +6,10 @@ function NewCampus (props) {
     const { newCampusEntry, handleSubmit, handleChange } = props
 
         return (
-            <div>
+            <div className='container'>
                 <form onSubmit = {handleSubmit}>
                     <legend> New Campus </legend>
-                        <label> Name </label>
+                        <label> Name </label><br />
                         <input
                         type="text"
                         value={newCampusEntry.name}
@@ -17,7 +17,7 @@ function NewCampus (props) {
                         onChange={handleChange}
                         />
                         <br />
-                        <label> Description</label>
+                        <label> Description</label><br />
                         <input
                         type= 'text'
                         value={newCampusEntry.description}
@@ -25,14 +25,14 @@ function NewCampus (props) {
                         onChange={handleChange} 
                         />
                         <br />
-                        <label> Image </label>
+                        <label> Image </label><br />
                         <input
                         type='text'
                         value={newCampusEntry.imageUrl}
                         name="imageUrl"
                         onChange={handleChange} 
                         />
-                        <br />
+                        <br /><br />
                         <button type="submit"> Add Campus </button>
                 </form>
             </div>

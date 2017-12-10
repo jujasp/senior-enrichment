@@ -1,9 +1,10 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import store, {removeStudent} from '../store'
 import { connect } from 'react-redux'
 
 const Students = (props) => {
-    const {students} = props
+    const {students, campuses, handleDelete } = props
 
         return (
             <div className="container">
@@ -23,11 +24,15 @@ const Students = (props) => {
                     students.map(student =>
                         { return (
                         <tr key={student.id}>
-                                <Link to={`/students/${student.id}`}>
+                                    <td><Link to={`/students/${student.id}`}>{student.name} </Link> </td>
                                     <td> {student.email} </td>
-                                    <td> {student.name} </td>
                                     <td> {student.gpa} </td>
-                                </Link>
+                                    <td> {campuses.filter(campus => campus.id === student.campusId)[0].name}</td>
+                                    <td> <button
+                                    onClick={(evt) => {
+                                        evt.preventDefault();
+                                        store.dispatch(removeStudent(student))
+                                    }} className="btn-danger">X</button></td>
                         </tr>
                         )
                     })
@@ -40,7 +45,8 @@ const Students = (props) => {
 
 const mapStateToProps = function(state) {
     return {
-        students: state.students
+        students: state.students,
+        campuses: state.campuses
     }
 }
 

@@ -18,23 +18,25 @@ class SingleCampus extends Component {
 
 
     render() {
-       const {campus, editCampus} = this.props
+       const {campus, editCampus, students} = this.props
         return (
-            <div>
-                <div>
+            <div className='container'>
                     <h1>{campus.name}</h1>
-                    <h2>{campus.description}</h2>
-                    
+                    <h4>{campus.description}</h4>
                     <img src={campus.imageUrl} />
-                    <Route
-                    path={`/campuses/${campus.id}`}
-                    render={()=> (<Students students={campus.students}/>)} />
+                    <br />
+                    <br />
+                    <h4>Students</h4>
+                    {students.filter(student => {return student.campusId === campus.id})
+                            .map(student => { 
+                            return <p key={student.id}> {student.name} </p>})}
                     <br />
                     <br />
                     <br />
-                    <Route path={`/campuses/${campus.id}`} render={()=>(<EditCampus />)}/>
-                    <button> Delete Campus </button>
-                </div>
+                    <br />
+                    <br />
+
+                    <EditCampus campus={campus} />
             </div>
         )
     }
@@ -42,12 +44,15 @@ class SingleCampus extends Component {
 
 const mapStateToProps = function(state, ownProps){
     return {
-        campus: state.campus
+        campus: state.campus,
+        students: state.students
     }
 }
 
 const mapDispatchToProps = function(dispatch, ownProps) {
+    return {
 
+    }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SingleCampus)

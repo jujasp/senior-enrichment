@@ -1,9 +1,9 @@
 
-const db = require('./server/db/models');
-const Campus = require('./server/db/models')
-const Student = require('./server/db/models');
+const {Campus} = require('./models')
+const {Student} = require('./models');
+const {db} = require('./models');
 
-db.sync()
+db.sync({force: true})
     .then(() => {
         return Promise.all([
             Campus.create({
@@ -40,7 +40,7 @@ db.sync()
                 lastName:'Walke',
                 email: 'jw@react.com',
                 gpa: 3.5,
-                campsusId: 1
+                campusId: 2
             }),
             Student.create({
                 firstName: 'Dan',

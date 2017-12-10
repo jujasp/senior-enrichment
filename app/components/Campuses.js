@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 const Campuses = (props) => {
-    const {campuses, students}  = props
+    const {campuses, students, onDelete}  = props
 
     return (
         <div className="container">
@@ -23,9 +23,9 @@ const Campuses = (props) => {
                         { return (
                             <tr key={campus.id}>
                                    <td> <img className="img-thumbnail" src={campus.imageUrl} /></td>
-                                    <td> {campus.name} </td>
-                                    <td> <Link to={`/campuses/${campus.id}`}>{campus.description} </Link></td>
-                                    <td><button className="btn-danger">X</button></td>
+                                    <td> <Link to={`/campuses/${campus.id}`}>{campus.name}</Link></td>
+                                    <td> {campus.description}</td>
+                                    <td><button className="btn-danger" onClick={onDelete}>X</button></td>
                                 
                             </tr>
                         )
@@ -42,6 +42,14 @@ const mapStateToProps = function(state) {
     return {
         campuses: state.campuses,
         students: state.students
+    }
+}
+
+const mapDispatchToProps = function(dispatch) {
+    return {
+        onDelete() {
+
+        }
     }
 }
 

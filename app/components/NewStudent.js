@@ -7,10 +7,10 @@ function NewStudent (props) {
     const { newStudentEntry, handleSubmit, handleChange } = props;
 
         return (
-            <div>
+            <div className='container'>
                 <form onSubmit = {handleSubmit}>
                     <legend> New Student </legend>
-                        <label> First Name </label>
+                        <label> First Name </label><br />
                         <input 
                         type='text' 
                         onChange={handleChange}
@@ -18,7 +18,7 @@ function NewStudent (props) {
                         name="firstName"
                         />
                         <br />
-                        <label> Last Name </label>
+                        <label> Last Name </label><br />
                         <input 
                         type='text' 
                         onChange={handleChange} 
@@ -26,7 +26,7 @@ function NewStudent (props) {
                         name="lastName"
                         />
                         <br />
-                        <label> E-mail</label>
+                        <label> E-mail</label><br />
                         <input 
                         type='text'
                         onChange={handleChange} 
@@ -34,7 +34,7 @@ function NewStudent (props) {
                         name="email"
                         />
                         <br />
-                        <label> GPA </label>
+                        <label> GPA </label><br />
                         <input 
                         type='text'
                         onChange={handleChange} 
@@ -42,13 +42,13 @@ function NewStudent (props) {
                         name="gpa"
                         />
                         <br />
-                        <label> Campus </label>
+                        <label> Campus </label><br />
                         <select name='campusId'>
                             <option value='1'>Value 1</option> 
                             <option value='2'>Value 2</option>
                             <option value='3'>Value 3</option>
                         </select>
-                        <br />
+                        <br /><br />
                         <button type="submit"> Add Student </button>
                 </form>
             </div>

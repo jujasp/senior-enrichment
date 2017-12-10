@@ -1,33 +1,31 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {connect} from 'react-redux'
 
-const EditCampus = (props) => {
-    const campus = props.campus
+export class EditCampus extends Component {
+    constructor() {
+    super()
 
+    }
+
+    render() {
+        const campus = this.props.campus
         return (
-            <div>
+            <div className="container">
                 <form>
-                    <legend> Campus </legend>
-                        <label> Name </label>
-                        <input type='text' value={campus.name} />
+                    <legend> Edit Campus </legend>
+                        <label> Name </label><br />
+                        <input onChange={handleChange} type="text" value={campus.name} />
                         <br />
-                        <label> Description</label>
-                        <input type='text' value={campus.description} />
+                        <label> Description</label><br />
+                        <input onChange={handleChange} type="text" value={campus.description} />
                         <br />
-                        <label> ImageUrl </label>
-                        <input type='text' value={campus.imageUrl} />
-                        <br />
+                        <label> ImageUrl </label><br />
+                        <input onChange={handleChange} type="text" value={campus.imageUrl} />
+                        <br /><br />
                         <button type="submit"> Edit campus </button>
                 </form>
             </div>
         )
-}
-
-
-//mapStateToProps
-const mapStateToProps = function(state) {
-    return {
-        campus: state.campus,
     }
 }
 
@@ -36,8 +34,11 @@ const mapDispatchToProps = function(dispatch) {
         handleSubmit(evt){
             evt.preventDefault();
             dispatch(updateCampus(campus, ownProps.history))
+        },
+        handleOnChange(evt){
+
         }
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(EditCampus)
+export default connect(null, mapDispatchToProps)(EditCampus)
