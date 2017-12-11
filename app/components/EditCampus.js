@@ -45,7 +45,7 @@ export default class EditCampus extends Component {
                         <input 
                         onChange={this.handleChange} 
                         type="text" 
-                        value={campus.imageUrl} />
+                        value={this.state.imageUrl} />
                         <br /><br />
                         <button 
                         type="submit"> Edit campus </button>

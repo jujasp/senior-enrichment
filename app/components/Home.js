@@ -11,13 +11,25 @@ import Campuses from './Campuses'
 import store, {fetchStudents, fetchCampuses } from '../store'
 
 export default class Home extends Component {
+  constructor(){
+    super()
+    this.state = store.getState()
+  }
 
   componentDidMount () {
     const studentsThunk = fetchStudents();
     const campusesThunk = fetchCampuses();
     store.dispatch(campusesThunk);
     store.dispatch(studentsThunk);
+
+    this.unsubscribe = store.subscribe(() => {
+			this.setState(store.getState());
+		});
   }
+
+  componentWillUnmount () {
+		this.unsubscribe();
+	}
 
 
 
@@ -29,12 +41,13 @@ export default class Home extends Component {
             <NavBar />
           </div>
           <Switch>
+            <Route exact path='/' component={Campuses}/>
             <Route path='/campuses/:campusId' component={SingleCampus} />
             <Route path ='/students/:studentId' component={SingleStudent} />
             <Route path='/students/:studentId/edit' component={EditCampus} />
             <Route exact path='/campuses' component={Campuses} />
             <Route exact path='/students' component={Students} />
-            <Route path='/new-student' component={NewStudent} />
+            <Route path='/new-student' render={(routeProps)=><NewStudent {...routeProps} campuses={this.state.campuses}/>} />
             <Route path='/new-campus' component={NewCampus} />
           </Switch>
         </div>

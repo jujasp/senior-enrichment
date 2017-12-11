@@ -10,10 +10,9 @@ export default class NewCampus extends Component {
     this.handleSubmit = this.handleSubmit.bind(this)
     }
 
-    handleSubmit(evt, campusData){
+    handleSubmit(evt, campusData, history){
         evt.preventDefault()
-        store.dispatch(postCampus(campusData))
-        this.setState('');
+        store.dispatch(postCampus(campusData, history))
     }
 
     handleChange(evt) {
@@ -25,7 +24,7 @@ export default class NewCampus extends Component {
         const campus = this.state
         return (
             <div className='container'>
-                <form onSubmit = {(e)=> {this.handleSubmit(e, campus)}} onChange={this.handleChange}>
+                <form onSubmit = {(e)=> {this.handleSubmit(e, campus, this.props.history)}} onChange={this.handleChange}>
                     <legend> New Campus </legend>
                         <label> Name </label><br />
                         <input

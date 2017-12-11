@@ -22,7 +22,7 @@ const Campuses = (props) => {
                 {
                     campuses.map(campus =>
                         { return (
-                            <tr key={campus.id}>
+                            <tr key={campus.name}>
                                    <td> <img className="img-thumbnail" src={campus.imageUrl} /></td>
                                     <td> <Link to={`/campuses/${campus.id}`}>{campus.name}</Link></td>
                                     <td> {campus.description}</td>

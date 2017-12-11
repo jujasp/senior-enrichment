@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import EditCampus from './EditCampus'
 import store, {fetchCampus} from '../store'
+import {Link} from 'react-router-dom'
 
 export default class SingleCampus extends Component {
     constructor() {
@@ -31,10 +32,10 @@ export default class SingleCampus extends Component {
                     <img src={campus.imageUrl} />
                     <br />
                     <br />
-                    <h6>Students</h6>
+                    <h4>Students</h4>
                     {students.filter(student => {return student.campusId === campus.id})
                             .map(student => { 
-                            return <p key={student.id}> {student.name} </p>})}
+                            return <p key={student.id}><Link to={`/students/${student.id}`}> {student.name}</Link></p>})}
                     <br />
                     <br />
                     <EditCampus campus={campus} />

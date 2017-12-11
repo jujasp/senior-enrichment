@@ -11,9 +11,6 @@ const initialState = {
 
     student: {},
     campus: {},
-
-    newCampusEntry: {},
-    newStudentEntry: {},
 }
 
 export default createStore(reducer, applyMiddleware(thunkMiddleware, loggingMiddleware))
@@ -151,24 +148,24 @@ export function fetchStudent(id){
     }
 }
 
-export function postCampus(campusData) {
+export function postCampus(campusData, history) {
     return function thunk(dispatch) {
         axios.post('/api/campuses', campusData)
             .then(res=> res.data)
             .then(newCampus => {
                 dispatch(getCampus(newCampus))
-                browserHistory.push(`/campuses/${newCampus.id}`)
+                history.push(`/campuses/${newCampus.id}`)
             })
     }
 }
 
-export function postStudent(studentData) {
+export function postStudent(studentData, history) {
     return function thunk(dispatch) {
         axios.post('/api/students', studentData)
             .then(res=>res.data)
             .then(student => {
-                const action = newStudent(student)
-                dispatch(action)
+                dispatch(getStudent(student))
+                history.push(`/students/${student.id}`)
             })
     }
 }
@@ -234,7 +231,7 @@ function reducer (state = initialState, action ){
         case GET_CAMPUS:
             return Object.assign({}, state, {campuses:[...state.campuses, action.campus], campus: action.campus})
         case GET_STUDENT:
-            return Object.assign({}, state, {student: action.student})
+            return Object.assign({}, state, {students:[...state.students, action.student], student: action.student})
          case UPDATE_STUDENT:
              return Object.assign({}, state, {students: state.students.map(student=>{
                  if(+student.id === +action.student.id) return action.student;
