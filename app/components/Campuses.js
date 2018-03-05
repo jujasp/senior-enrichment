@@ -1,11 +1,18 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import store, {removeCampus} from '../store'
+import store, { removeCampus } from '../store'
 
-const Campuses = (props) => {
-    const {campuses}  = props
+const mapState = state => ({
+    campuses: state.campus,
+    students: state.student
+})
 
+const Campuses = props => {
+    const { campuses } = props || []
+    //const campuses = []
+    console.log(props)
+    if (!props.campuses) {return <div />}
     return (
         <div className="container">
                 <h2> Campuses </h2>
@@ -43,12 +50,4 @@ const Campuses = (props) => {
     )
 }
 
-//mapStateToProps
-const mapStateToProps = function(state) {
-    return {
-        campuses: state.campuses,
-        students: state.students
-    }
-}
-
-export default connect(mapStateToProps)(Campuses);
+export default connect(mapState)(Campuses)

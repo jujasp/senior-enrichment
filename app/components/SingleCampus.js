@@ -1,40 +1,27 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import EditCampus from './EditCampus'
 import store, {fetchCampus} from '../store'
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
-export default class SingleCampus extends Component {
-    constructor() {
-        super();
-        this.state = store.getState();
-    }
+const mapState = state => ({
+    campuses: state.campus,
+    students: state.student
+})
 
-    componentDidMount () {
-        this.unsubscribe = store.subscribe(()=> {
-            this.setState(store.getState());
-        })
-        const campusId = this.props.match.params.campusId;
-        const campusThunk = fetchCampus(campusId)
-        store.dispatch(campusThunk)
-    }
-
-    componentWillUnmount() {
-        this.unsubscribe();
-    }
-
-
+class SingleCampus extends Component {
     render() {
-       const {campus, students} = this.state
+       const {campuses, students} = this.props
+       const campus = campuses.filter(campus => campus.id === +this.props.match.params.campusId)[0]
         return (
-            <div className='container'>
+            <div className="container">
                     <h2>{campus.name}</h2>
                     <p>{campus.description}</p>
                     <img src={campus.imageUrl} />
                     <br />
-                    <br />
                     <h4>Students</h4>
-                    {students.filter(student => {return student.campusId === campus.id})
-                            .map(student => { 
+                    {students.filter(student => student.campusId === campus.id)
+                            .map(student => {
                             return <p key={student.id}><Link to={`/students/${student.id}`}> {student.name}</Link></p>})}
                     <br />
                     <br />
@@ -43,3 +30,5 @@ export default class SingleCampus extends Component {
         )
     }
 }
+
+export default connect(mapState)(SingleCampus)

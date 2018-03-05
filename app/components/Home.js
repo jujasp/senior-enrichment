@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux'
 import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 import NavBar from './NavBar'
 import SingleCampus from './SingleCampus'
@@ -8,30 +9,26 @@ import EditCampus from './EditCampus'
 import NewCampus from './NewCampus'
 import Students from './Students'
 import Campuses from './Campuses'
-import store, {fetchStudents, fetchCampuses } from '../store'
+import store from '../store'
+import { fetchStudents } from '../reducers/student'
+import { fetchCampuses } from '../reducers/campus'
 
-export default class Home extends Component {
-  constructor(){
-    super()
-    this.state = store.getState()
+const mapDispatch = dispatch => ({
+  loadInitialData() {
+    dispatch(fetchStudents())
+    dispatch(fetchCampuses())
   }
+})
 
+const mapState = state => ({
+  students: state.student,
+  campuses: state.campus
+})
+
+class Home extends Component {
   componentDidMount () {
-    const studentsThunk = fetchStudents();
-    const campusesThunk = fetchCampuses();
-    store.dispatch(campusesThunk);
-    store.dispatch(studentsThunk);
-
-    this.unsubscribe = store.subscribe(() => {
-			this.setState(store.getState());
-		});
+    this.props.loadInitialData()
   }
-
-  componentWillUnmount () {
-		this.unsubscribe();
-	}
-
-
 
   render () {
     return (
@@ -47,11 +44,13 @@ export default class Home extends Component {
             <Route path='/students/:studentId/edit' component={EditCampus} />
             <Route exact path='/campuses' component={Campuses} />
             <Route exact path='/students' component={Students} />
-            <Route path='/new-student' render={(routeProps)=><NewStudent {...routeProps} campuses={this.state.campuses}/>} />
+            <Route path='/new-student' render={(routeProps) => <NewStudent {...routeProps} campuses={this.props.campuses}/>} />
             <Route path='/new-campus' component={NewCampus} />
           </Switch>
         </div>
-      </Router> 
+      </Router>
     );
   }
 }
+
+export default connect(mapState, mapDispatch)(Home)
