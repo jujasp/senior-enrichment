@@ -15,7 +15,7 @@ const mapDispatch = dispatch => ({
 })
 
 const Students = props => {
-    const {students, campuses} = props
+    const { students, campuses, deleteStudent } = props
         return (
             <div className="container">
                 <h2> Students </h2>
@@ -44,7 +44,7 @@ const Students = props => {
                                             }</td>
                                             <td>
                                                 <button
-                                                    onClick={() => props.deleteStudent(student)}
+                                                    onClick={() => deleteStudent(student)}
                                                     className="btn-danger">X
                                                 </button>
                                             </td>

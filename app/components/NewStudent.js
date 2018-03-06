@@ -33,7 +33,6 @@ export default class NewStudent extends Component {
     }
 
     render(){
-        console.log(this.props)
         const student = this.state
         const {campuses} = this.props
         return (

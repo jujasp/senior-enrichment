@@ -83,9 +83,7 @@ export function removeStudent(student) {
             .then(() => {
                 dispatch(deleteStudent(student))
             })
-            .catch(error => {
-                throw(error)
-            })
+            .catch(console.error)
         }
 }
 

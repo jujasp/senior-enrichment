@@ -9,7 +9,6 @@ import EditCampus from './EditCampus'
 import NewCampus from './NewCampus'
 import Students from './Students'
 import Campuses from './Campuses'
-import store from '../store'
 import { fetchStudents } from '../reducers/student'
 import { fetchCampuses } from '../reducers/campus'
 
@@ -31,6 +30,7 @@ class Home extends Component {
   }
 
   render () {
+    if (!this.props.campuses.length) { return <div /> }
     return (
       <Router>
         <div>

@@ -8,19 +8,19 @@ const NavBar = () => {
                 <div className="navbar-header">
                     <ul className="nav navbar-nav">
                         <li>
-                            <Link to='/students' onClick={e => e.preventDefault()}>STUDENTS</Link>
+                            <Link to='/students'>STUDENTS</Link>
                         </li>
                         <li> 
-                            <Link to='/campuses' onClick={e => e.preventDefault()}>CAMPUSES</Link>
+                            <Link to='/campuses'>CAMPUSES</Link>
                         </li>
                         <li>
-                            <Link to='/' onClick={e => e.preventDefault()}>HOME</Link>
+                            <Link to='/'>HOME</Link>
                         </li>
                         <li>
-                            <Link to='/new-student' onClick={e => e.preventDefault()}>NEW STUDENT</Link>
+                            <Link to='/new-student'>NEW STUDENT</Link>
                         </li>
                         <li>
-                            <Link to='/new-campus' onClick={e => e.preventDefault()}>NEW CAMPUS</Link>
+                            <Link to='/new-campus'>NEW CAMPUS</Link>
                         </li>
                     </ul>
                 </div>

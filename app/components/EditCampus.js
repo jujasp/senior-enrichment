@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import store, {putCampus} from '../store'
+import React, { Component } from 'react';
+import store, { putCampus } from '../store'
 
 export default class EditCampus extends Component {
     constructor(props) {
@@ -21,33 +21,32 @@ export default class EditCampus extends Component {
     }
 
     render() {
-        const {campus, students} = this.props
         const id = this.props.campus.id
         return (
             <div className="container">
                 <form onSubmit={(e)=>this.handleSubmit(e, id)}>
                     <h5> Edit Campus </h5>
                         <label> Name </label><br />
-                        <input 
+                        <input
                         onChange={this.handleChange}
-                        name="name" 
-                        type="text" 
+                        name="name"
+                        type="text"
                         value={this.state.name} />
                         <br />
                         <label> Description</label><br />
-                        <input 
-                        onChange={this.handleChange} 
+                        <input
+                        onChange={this.handleChange}
                         name="description"
-                        type="text" 
+                        type="text"
                         value={this.state.description} />
                         <br />
                         <label> ImageUrl </label><br />
-                        <input 
-                        onChange={this.handleChange} 
-                        type="text" 
+                        <input
+                        onChange={this.handleChange}
+                        type="text"
                         value={this.state.imageUrl} />
                         <br /><br />
-                        <button 
+                        <button
                         type="submit"> Edit campus </button>
                 </form>
             </div>

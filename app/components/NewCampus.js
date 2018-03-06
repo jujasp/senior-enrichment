@@ -4,7 +4,6 @@ import store, {postCampus} from '../store'
 export default class NewCampus extends Component {
     constructor(){
     super()
-    this.state = {}
 
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)

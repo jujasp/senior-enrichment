@@ -50,8 +50,7 @@ export function fetchCampus(id) {
         axios.get(`/api/campuses/${id}`)
         .then(res => res.data)
         .then(campus => {
-            const action = getCampus(campus)
-            dispatch(action)
+            dispatch(getCampus(campus))
         })
     }
 }
@@ -59,7 +58,7 @@ export function fetchCampus(id) {
 export function postCampus(campusData, history) {
     return function thunk(dispatch) {
         axios.post('/api/campuses', campusData)
-            .then(res=> res.data)
+            .then(res => res.data)
             .then(newCampus => {
                 dispatch(getCampus(newCampus))
                 history.push(`/campuses/${newCampus.id}`)
@@ -69,9 +68,11 @@ export function postCampus(campusData, history) {
 
 export function putCampus(id, campusData){
     return function thunk(dispatch) {
+        console.log('ID', id)
+        console.log('campusData', campusData)
         axios.put(`/api/campuses/${id}`, campusData)
-            .then(res=>res.data)
-            .then(campus=> {
+            .then(res => res.data)
+            .then(campus => {
                 const action = updateCampus(campus)
                 dispatch(action)
             })
@@ -84,9 +85,7 @@ export function removeCampus(campus) {
             .then(() => {
                 dispatch(deleteCampus(campus))
             })
-            .catch(error => {
-                throw(error)
-            })
+            .catch(console.error)
         }
 }
 
@@ -98,7 +97,10 @@ export default function(campuses = [], action) {
         case GET_CAMPUSES:
             return [...action.campuses]
         case UPDATE_CAMPUS:
-            return [...campuses, action.campus]
+            return campuses.map(campus => {
+                if(campus.id !== action.campus.id) {return campus}
+                if(campus.id === +action.campus.id) {return action.campus}
+            })
         case DELETE_CAMPUS:
             return campuses.filter(campus => campus !== action.campus)
         default:
