@@ -22,7 +22,7 @@ export default class NewCampus extends Component {
     render() {
         const campus = this.state
         return (
-            <div className='container'>
+            <div className="container">
                 <form onSubmit = {(e)=> {this.handleSubmit(e, campus, this.props.history)}} onChange={this.handleChange}>
                     <legend> New Campus </legend>
                         <label> Name </label><br />
@@ -34,14 +34,14 @@ export default class NewCampus extends Component {
                         <br />
                         <label> Description</label><br />
                         <input
-                        type= 'text'
+                        type= "text"
                         value={campus.description}
-                        name='description'
+                        name="description"
                         />
                         <br />
                         <label> Image </label><br />
                         <input
-                        type='text'
+                        type="text"
                         value={campus.imageUrl}
                         name="imageUrl"
                         />

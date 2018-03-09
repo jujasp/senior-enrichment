@@ -1,32 +1,17 @@
-import React, { Component } from 'react';
-import store, {fetchStudent} from '../store'
+import React from 'react';
+import { connect } from 'react-redux'
 import EditStudent from './EditStudent'
 
-export default class SingleStudent extends Component {
-    constructor() {
-        super();
-        this.state = store.getState();
-    }
+const mapState = state => ({
+    campuses: state.campus,
+    students: state.student
+})
 
-    componentDidMount() {
-        this.unsubscribe = store.subscribe(() => {
-			this.setState(store.getState());
-		});
-        const studentId = this.props.match.params.studentId
-        const studentThunk = fetchStudent(studentId)
-        store.dispatch(studentThunk)
-    }
-
-
-	componentWillUnmount () {
-		this.unsubscribe();
-	}
-
-
-    render() {
-        const {student, campuses} = this.state
-         return (
-             <div className="container">
+const SingleStudent = props => {
+        const {students, campuses} = props
+        const student = students.filter(s => s.id === +props.match.params.studentId)[0]
+            return (
+                <div className="container">
                 <table className="table">
                  <thead>
                     <tr>
@@ -39,20 +24,20 @@ export default class SingleStudent extends Component {
                 </thead>
                 <tbody>
                     <tr>
-                     <td>{this.state.student.firstName}</td>
+                     <td>{student.firstName}</td>
                      <td>{student.lastName}</td>
                      <td>{student.email}</td>
                      <td>{student.gpa}</td>
-                     <td>{ !student.campusId?
+                     <td>{ !student.campusId ?
                         "Undefined" :
                          campuses.filter(campus => campus.id === student.campusId)
                         .map(campus => campus.name)[0]}</td>
                     </tr>
                 </tbody>
                 </table>
-                    <EditStudent student={student} campuses={campuses}/>
+                    <EditStudent student={student} campuses={campuses} />
              </div>
-         )
-     }
+        )
 }
 
+export default connect(mapState)(SingleStudent)

@@ -68,8 +68,6 @@ export function postCampus(campusData, history) {
 
 export function putCampus(id, campusData){
     return function thunk(dispatch) {
-        console.log('ID', id)
-        console.log('campusData', campusData)
         axios.put(`/api/campuses/${id}`, campusData)
             .then(res => res.data)
             .then(campus => {
@@ -89,7 +87,7 @@ export function removeCampus(campus) {
         }
 }
 
-//ACTION REDUCERS
+//ACTION REDUCER
 export default function(campuses = [], action) {
     switch (action.type) {
         case GET_CAMPUS:
@@ -98,8 +96,8 @@ export default function(campuses = [], action) {
             return [...action.campuses]
         case UPDATE_CAMPUS:
             return campuses.map(campus => {
-                if(campus.id !== action.campus.id) {return campus}
-                if(campus.id === +action.campus.id) {return action.campus}
+                if (campus.id === +action.campus.id) {return action.campus}
+                return campus
             })
         case DELETE_CAMPUS:
             return campuses.filter(campus => campus !== action.campus)

@@ -8,19 +8,19 @@ const NavBar = () => {
                 <div className="navbar-header">
                     <ul className="nav navbar-nav">
                         <li>
-                            <Link to='/students'>STUDENTS</Link>
-                        </li>
-                        <li> 
-                            <Link to='/campuses'>CAMPUSES</Link>
+                            <Link to="/students">STUDENTS</Link>
                         </li>
                         <li>
-                            <Link to='/'>HOME</Link>
+                            <Link to="/campuses">CAMPUSES</Link>
                         </li>
                         <li>
-                            <Link to='/new-student'>NEW STUDENT</Link>
+                            <Link to="/">HOME</Link>
                         </li>
                         <li>
-                            <Link to='/new-campus'>NEW CAMPUS</Link>
+                            <Link to="/new-student">NEW STUDENT</Link>
+                        </li>
+                        <li>
+                            <Link to="/new-campus">NEW CAMPUS</Link>
                         </li>
                     </ul>
                 </div>

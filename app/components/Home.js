@@ -38,14 +38,14 @@ class Home extends Component {
             <NavBar />
           </div>
           <Switch>
-            <Route exact path='/' component={Campuses}/>
-            <Route path='/campuses/:campusId' component={SingleCampus} />
-            <Route path ='/students/:studentId' component={SingleStudent} />
-            <Route path='/students/:studentId/edit' component={EditCampus} />
-            <Route exact path='/campuses' component={Campuses} />
-            <Route exact path='/students' component={Students} />
-            <Route path='/new-student' render={(routeProps) => <NewStudent {...routeProps} campuses={this.props.campuses}/>} />
-            <Route path='/new-campus' component={NewCampus} />
+            <Route exact path="/" component={Campuses}/>
+            <Route path="/campuses/:campusId" component={SingleCampus} />
+            <Route path ="/students/:studentId" component={SingleStudent} />
+            <Route path="/students/:studentId/edit" component={EditCampus} />
+            <Route exact path="/campuses" component={Campuses} />
+            <Route exact path="/students" component={Students} />
+            <Route path="/new-student" render={(routeProps) => <NewStudent {...routeProps} campuses={this.props.campuses}/>} />
+            <Route path="/new-campus" component={NewCampus} />
           </Switch>
         </div>
       </Router>
