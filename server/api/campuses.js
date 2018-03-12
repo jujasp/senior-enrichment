@@ -45,7 +45,6 @@ router.put('/:campusId', (req, res, next) => {
 
 router.delete('/:campusId', (req, res, next) => {
     const id = req.params.campusId
-
     Campus.destroy({where: {id}})
     .then(() => res.send("Successful deletion"))
     .catch(next)

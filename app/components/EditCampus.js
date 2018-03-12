@@ -1,13 +1,21 @@
-import React, { Component } from 'react';
-import store, { putCampus } from '../store'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { putCampus } from '../reducers/campus'
 
-export default class EditCampus extends Component {
+const mapDispatch = dispatch => ({
+    handleSubmit(e, id, newData) {
+        e.preventDefault()
+        console.log(newData)
+        dispatch(putCampus(id, newData))
+    }
+})
+
+class EditCampus extends Component {
     constructor(props) {
     super(props)
         this.state = {}
 
         this.handleChange = this.handleChange.bind(this)
-        this.handleSubmit = this.handleSubmit.bind(this)
     }
 
     handleChange(evt) {
@@ -15,16 +23,11 @@ export default class EditCampus extends Component {
         this.setState({[evt.target.name]: evt.target.value})
     }
 
-    handleSubmit(evt, campusId) {
-        evt.preventDefault();
-        store.dispatch(putCampus(campusId, this.state))
-    }
-
     render() {
         const id = this.props.campus.id
         return (
             <div className="container">
-                <form onSubmit={(e)=>this.handleSubmit(e, id)}>
+                <form onSubmit={e => this.props.handleSubmit(e, id, this.state)}>
                     <h5> Edit Campus </h5>
                         <label> Name </label><br />
                         <input
@@ -53,4 +56,6 @@ export default class EditCampus extends Component {
         )
     }
 }
+
+export default connect(null, mapDispatch)(EditCampus)
 

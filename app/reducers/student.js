@@ -94,7 +94,10 @@ export default function(students = [], action) {
         case GET_STUDENTS:
             return [...action.students]
         case UPDATE_STUDENT:
-            return [...students, action.student]
+        return students.map(student => {
+            if (student.id === +action.student.id) {return action.student}
+            return student
+        })
         case DELETE_STUDENT:
             return students.filter(student => student !== action.student)
         default:
